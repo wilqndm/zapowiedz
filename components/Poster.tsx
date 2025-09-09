@@ -77,20 +77,19 @@ export default function Poster({
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/80" />
         </div>
 
-        {/* NAKŁADKA: LOGO ROZGRYWEK (5px, 5px) */}
+        {/* NAKŁADKA: LOGO ROZGRYWEK (5px, 5px) — stałe 112×32 px, bez cienia */}
         <div
           className="absolute z-[60]"
           style={{ top: 5, left: 5 }}
           aria-hidden="true"
         >
-          <Image
+          <img
             src={competitionLogo}
-            alt={matchType}
-            width={112}
-            height={32}
-            className="w-[112px] h-[32px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
-            unoptimized
-            priority
+            alt=""
+            className="block w-[112px] h-[32px]"
+            width={56}
+            height={16}
+            draggable={false}
           />
         </div>
 
@@ -196,7 +195,6 @@ export default function Poster({
 
               {/* Godzina */}
               <div className="flex items-center gap-2">
-                {/* Upewnij się, że w Icons.tsx jest nowy obrysowy ClockIcon */}
                 <ClockIcon className="w-6 h-6 opacity-90" />
                 <span className="text-lg">{timeStr}</span>
               </div>
