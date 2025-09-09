@@ -46,7 +46,7 @@
             {/* TŁO */}
             <div className="absolute inset-0">
               <Image
-                src={backgroundUrl || "/background/example.jpg"}
+                src={backgroundUrl || "/background/bg_liga.png"}
                 alt="Tło"
                 fill
                 priority
