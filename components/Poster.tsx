@@ -86,7 +86,7 @@ export default function Poster({
           <img
             src={competitionLogo}
             alt=""
-            className="block h-[64px] w-auto"
+            className="block h-[128px] w-auto"
             draggable={false}
           />
         </div>
