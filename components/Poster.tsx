@@ -48,7 +48,7 @@ export default function Poster({
       <div
         ref={containerRef}
         id="poster"
-        className="relative w-[1200px] h-[630px] overflow-hidden rounded-xl ring-1 ring-white/10 shadow-2xl bg-black"
+        className="relative w-[1200px] h-[630px] overflow-hidden ring-1 ring-white/10 shadow-2xl bg-black"
         style={{ aspectRatio: "1200/630" }}
       >
         {/* TŁO */}
