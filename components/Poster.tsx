@@ -37,6 +37,12 @@ export default function Poster({
 
   const isDataUrl = !!backgroundUrl?.startsWith("data:");
 
+  // Ścieżka do logotypu rozgrywek (wstaw pliki do /public/competitions)
+  const competitionLogo =
+    matchType === "Liga"
+      ? "/competitions/liga.png"
+      : "/competitions/puchar.png";
+
   return (
     <div className="select-none">
       <div
@@ -71,9 +77,21 @@ export default function Poster({
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/80" />
         </div>
 
-        {/* PASEK GÓRNY: KOLEJKA + TYP */}
+        {/* PASEK GÓRNY: LOGO ROZGRYWEK + KOLEJKA */}
         <div className={clsx("absolute top-0 left-0 right-0 h-16 flex items-center justify-between px-8", topBarColor)}>
-          <div className="text-white/80 uppercase tracking-wide text-sm">{matchType}</div>
+          {/* ZAMIANA napisu „Liga/Puchar” na LOGO rozgrywek */}
+          <div className="flex items-center">
+            <Image
+              src={competitionLogo}
+              alt={matchType}
+              width={112}
+              height={32}
+              className="h-8 w-auto"
+              unoptimized
+              priority
+            />
+          </div>
+
           <div className="text-2xl font-semibold">Kolejka {round?.trim() ? round : "—"}</div>
           <div className="opacity-0">.</div>
         </div>
@@ -81,7 +99,7 @@ export default function Poster({
         {/* TREŚĆ: HERBY + „VS” + NAZWY */}
         <div className="absolute inset-0 pt-16 pb-28 px-8">
           {/* 3-kolumnowa siatka: gospodarz | VS | gość */}
-          <div className="h-full grid grid-cols-[1fr_auto_1fr]">
+          <div className="h-full grid grid-cols-[1fr_auto_1fr] mt-[30px]">
             {/* GOSPODARZ */}
             <div className="flex flex-col items-center justify-center gap-6">
               <div className="relative w-56 h-56">
@@ -105,7 +123,7 @@ export default function Poster({
               </div>
             </div>
 
-            {/* VS */}
+            {/* VS – białe z lekką przezroczystością */}
             <div className="flex items-center justify-center px-4">
               <div
                 className="
@@ -114,13 +132,12 @@ export default function Poster({
                   font-black
                   leading-none
                   tracking-[0.2em]
-                  bg-gradient-to-b from-white to-white/70
-                  text-transparent bg-clip-text
+                  text-white/85
                   text-shadow-lg
                 "
-                // duży tytuł na płótnie 1200x630
                 style={{ fontSize: 120 }}
                 aria-hidden="true"
+                title="Pojedynek"
               >
                 VS
               </div>
