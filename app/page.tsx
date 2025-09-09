@@ -21,26 +21,78 @@
 
       const posterRef = useRef<HTMLDivElement>(null);
 
-      async function handleDownload() {
-        const node = posterRef.current;
-        if (!node) return;
+async function handleDownload() {
+  const node = posterRef.current;
+  if (!node) return;
 
-        const dataUrl = await htmlToImage.toPng(node, {
-          cacheBust: true,
-          pixelRatio: 1,
-          width: 1200,
-          height: 630,
-          backgroundColor: "#000000"
-        });
+  // 1) Poczekaj aż obrazki się zdekodują (ważne dla Safari)
+  const imgs = Array.from(node.querySelectorAll('img'));
+  await Promise.all(
+    imgs.map((img) =>
+      // decode() jest eleganckie; fallback na load dla starszych implementacji
+      (img as any).decode?.() ??
+      new Promise<void>((res, rej) => {
+        if (img.complete) return res();
+        img.addEventListener('load', () => res(), { once: true });
+        img.addEventListener('error', () => rej(new Error('Image load error')), { once: true });
+      })
+    )
+  );
 
-        const link = document.createElement("a");
-        const hostSlug = host?.id ?? "gospodarz";
-        const guestSlug = guest?.id ?? "gosc";
-        const base = `zapowiedz-${hostSlug}-vs-${guestSlug}`;
-        link.download = `${base}.png`;
-        link.href = dataUrl;
-        link.click();
+  // 2) Spróbuj najpierw BLOB (lepsza kompatybilność niż dataURL)
+  try {
+    const blob = await htmlToImage.toBlob(node, {
+      cacheBust: true,
+      pixelRatio: 1,
+      width: 1200,
+      height: 630,
+      backgroundColor: "#000000"
+    });
+    if (!blob) throw new Error("Blob conversion failed");
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    const hostSlug = (host?.id ?? "gospodarz").toString();
+    const guestSlug = (guest?.id ?? "gosc").toString();
+    link.download = `zapowiedz-${hostSlug}-vs-${guestSlug}.png`;
+    link.href = url;
+
+    // Safari/chrome-headless: lepiej chwilowo dodać do DOM
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    // Sprzątanie URL
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+  } catch (blobErr) {
+    // 3) Fallback – otwórz w nowej karcie jako dataURL (np. iOS, nietypowe profile)
+    try {
+      const dataUrl = await htmlToImage.toPng(node, {
+        cacheBust: true,
+        pixelRatio: 1,
+        width: 1200,
+        height: 630,
+        backgroundColor: "#000000"
+      });
+      // Na iOS pobranie może być ignorowane – pokazujemy w nowej karcie do ręcznego zapisu
+      const w = window.open(dataUrl, "_blank");
+      if (!w) {
+        // Jeszcze jeden plan B: wymuś kliknięcie na <a>
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = "plakat.png";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
       }
+    } catch (e) {
+      alert("Nie udało się wygenerować obrazu do pobrania.");
+      // (opcjonalnie: wyloguj do konsoli szczegóły)
+      console.error(e);
+    }
+  }
+}
+
 
       return (
         <main className="min-h-screen w-full">
