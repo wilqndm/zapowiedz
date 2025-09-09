@@ -37,7 +37,7 @@ export default function Poster({
 
   const isDataUrl = !!backgroundUrl?.startsWith("data:");
 
-  // Ścieżka do logotypu rozgrywek (umieść pliki w /public/competitions/)
+  // Ścieżka do logotypu rozgrywek (pliki w /public/competitions/)
   const competitionLogo =
     matchType === "Liga"
       ? "/competitions/liga.png"
@@ -54,7 +54,7 @@ export default function Poster({
         {/* TŁO */}
         <div className="absolute inset-0">
           {isDataUrl ? (
-            // Dla data: użyj zwykłego <img>, stabilniejsze przy snapshotach
+            // Dla data: użyj zwykłego <img> (stabilniejsze dla html-to-image)
             <img
               src={backgroundUrl || ""}
               alt="Tło"
@@ -62,7 +62,7 @@ export default function Poster({
               draggable={false}
             />
           ) : (
-            // Pozostałe: next/image z unoptimized, by nie zahaczać o optimizer
+            // Pozostałe: next/image z unoptimized, by nie kolidować z generowaniem PNG
             <Image
               src={backgroundUrl || "/background/example.jpg"}
               alt="Tło"
@@ -77,7 +77,7 @@ export default function Poster({
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/80" />
         </div>
 
-        {/* NAKŁADKA: LOGO ROZGRYWEK na obrazie (5px, 5px) */}
+        {/* NAKŁADKA: LOGO ROZGRYWEK (5px, 5px) */}
         <div
           className="absolute z-[60]"
           style={{ top: 5, left: 5 }}
@@ -86,26 +86,25 @@ export default function Poster({
           <Image
             src={competitionLogo}
             alt={matchType}
-            width={56}
-            height={16}
-            className="drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
+            width={112}
+            height={32}
+            className="w-[112px] h-[32px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
             unoptimized
             priority
           />
         </div>
 
-        {/* PASEK GÓRNY: tylko KOLEJKA (logo usunięte z paska) */}
+        {/* PASEK GÓRNY: tylko KOLEJKA (logo przeniesione na obraz) */}
         <div className={clsx("absolute top-0 left-0 right-0 h-16 flex items-center justify-between px-8", topBarColor)}>
-          {/* lewy placeholder (szerokość = szer. logo dla zachowania centrowania) */}
+          {/* lewy/prawy placeholder – szerokość jak logo, by „Kolejka” była idealnie wycentrowana */}
           <div className="w-[112px] h-8" />
           <div className="text-2xl font-semibold">Kolejka {round?.trim() ? round : "—"}</div>
-          {/* prawy placeholder (symetria) */}
           <div className="w-[112px] h-8" />
         </div>
 
         {/* TREŚĆ: HERBY + „VS” + NAZWY */}
         <div className="absolute inset-0 pt-16 pb-28 px-8">
-          {/* 3-kolumnowa siatka: gospodarz | VS | gość */}
+          {/* 3‑kolumnowa siatka: gospodarz | VS | gość */}
           <div className="h-full grid grid-cols-[1fr_auto_1fr] mt-[30px]">
             {/* GOSPODARZ */}
             <div className="flex flex-col items-center justify-center gap-6">
@@ -142,7 +141,7 @@ export default function Poster({
                   text-white/85
                   text-shadow-lg
                 "
-                style={{ fontSize: 100 }}
+                style={{ fontSize: 120 }}
                 aria-hidden="true"
                 title="Pojedynek"
               >
@@ -174,37 +173,37 @@ export default function Poster({
           </div>
         </div>
 
-{/* DÓŁ: ADRES + DATA + GODZINA */}
-<div className="absolute bottom-0 left-0 right-0">
-  <div className="px-8 py-5 bg-black/35 backdrop-blur-md">
-    <div className="flex items-center justify-center gap-8 flex-wrap text-center">
-      {/* Adres stadionu gospodarza */}
-      <div className="flex items-center gap-2 min-w-0">
-        <MapPinIcon className="w-6 h-6 opacity-90" />
-        <span className="text-lg truncate max-w-[40vw]">{address}</span>
+        {/* DÓŁ: ADRES + DATA + GODZINA (wyśrodkowane) */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <div className="px-8 py-5 bg-black/35 backdrop-blur-md">
+            <div className="flex items-center justify-center gap-8 flex-wrap text-center">
+              {/* Adres stadionu gospodarza */}
+              <div className="flex items-center gap-2 min-w-0">
+                <MapPinIcon className="w-6 h-6 opacity-90" />
+                <span className="text-lg truncate max-w-[40vw]">{address}</span>
+              </div>
+
+              {/* separator (kropka) – ukryty na bardzo wąskich ekranach */}
+              <span className="hidden sm:inline text-white/50">•</span>
+
+              {/* Data */}
+              <div className="flex items-center gap-2">
+                <CalendarIcon className="w-6 h-6 opacity-90" />
+                <span className="text-lg">{dateStr}</span>
+              </div>
+
+              <span className="hidden sm:inline text-white/50">•</span>
+
+              {/* Godzina */}
+              <div className="flex items-center gap-2">
+                {/* Upewnij się, że w Icons.tsx jest nowy obrysowy ClockIcon */}
+                <ClockIcon className="w-6 h-6 opacity-90" />
+                <span className="text-lg">{timeStr}</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
-      {/* separator (kropka) – ukryty na bardzo wąskich ekranach */}
-      <span className="hidden sm:inline text-white/50">•</span>
-
-      {/* Data */}
-      <div className="flex items-center gap-2">
-        <CalendarIcon className="w-6 h-6 opacity-90" />
-        <span className="text-lg">{dateStr}</span>
-      </div>
-
-      <span className="hidden sm:inline text-white/50">•</span>
-
-      {/* Godzina */}
-      <div className="flex items-center gap-2">
-        {/* Nowy, wyraźny zegar (obrys) */}
-        <ClockIcon className="w-6 h-6 opacity-90" />
-        <span className="text-lg">{timeStr}</span>
-      </div>
-    </div>
-  </div>
-</div>
-
     </div>
   );
 }
