@@ -88,7 +88,7 @@ export default function Poster({
             alt={matchType}
             width={224}
             height={64}
-            className="h-8 w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
+            className="drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
             unoptimized
             priority
           />
