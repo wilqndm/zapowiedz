@@ -1,1 +1,3 @@
-// vercel.json content goes here
+{
+  "framework": "nextjs"
+}
