@@ -92,7 +92,7 @@ export default function Poster({
         </div>
 
   {/* PASEK GÓRNY: z clip-path i przesunięciem */}
-<div className="absolute left-0 top-[15px] h-[32px] px-8" style={{ width: '90%' }}>
+<div className="absolute left-0 top-[15px] h-[32px]" style={{ width: '95%' }}>
   <div
     className={clsx(
       "h-full flex items-center justify-center text-white text-xl font-semibold",
