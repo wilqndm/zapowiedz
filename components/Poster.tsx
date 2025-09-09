@@ -48,8 +48,8 @@ export default function Poster({
       <div
         ref={containerRef}
         id="poster"
-        className="relative w-[1200px] h-[630px] overflow-hidden ring-1 ring-white/10 shadow-2xl bg-black"
-        style={{ aspectRatio: "1200/630" }}
+        className="relative w-[940px] h-[810px] overflow-hidden ring-1 ring-white/10 shadow-2xl bg-black"
+        style={{ aspectRatio: "940/810" }}
       >
         {/* TŁO */}
         <div className="absolute inset-0">
@@ -68,7 +68,7 @@ export default function Poster({
               alt="Tło"
               fill
               priority
-              sizes="1200px"
+              sizes="940px"
               className="object-cover"
               unoptimized
             />
