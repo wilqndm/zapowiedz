@@ -37,7 +37,7 @@ export default function Poster({
 
   const isDataUrl = !!backgroundUrl?.startsWith("data:");
 
-  // Ścieżka do logotypu rozgrywek (wstaw pliki do /public/competitions)
+  // Ścieżka do logotypu rozgrywek (umieść pliki w /public/competitions/)
   const competitionLogo =
     matchType === "Liga"
       ? "/competitions/liga.png"
@@ -54,7 +54,7 @@ export default function Poster({
         {/* TŁO */}
         <div className="absolute inset-0">
           {isDataUrl ? (
-            // Używamy zwykłego <img> dla data: URL (stabilniejsze przy generowaniu obrazu do pobrania)
+            // Dla data: użyj zwykłego <img>, stabilniejsze przy snapshotach
             <img
               src={backgroundUrl || ""}
               alt="Tło"
@@ -62,7 +62,7 @@ export default function Poster({
               draggable={false}
             />
           ) : (
-            // Pozostałe przypadki: next/image (z unoptimized, aby nie kolidować z przechwytywaniem)
+            // Pozostałe: next/image z unoptimized, by nie zahaczać o optimizer
             <Image
               src={backgroundUrl || "/background/example.jpg"}
               alt="Tło"
@@ -77,23 +77,30 @@ export default function Poster({
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/80" />
         </div>
 
-        {/* PASEK GÓRNY: LOGO ROZGRYWEK + KOLEJKA */}
-        <div className={clsx("absolute top-0 left-0 right-0 h-16 flex items-center justify-between px-8", topBarColor)}>
-          {/* ZAMIANA napisu „Liga/Puchar” na LOGO rozgrywek */}
-          <div className="flex items-center">
-            <Image
-              src={competitionLogo}
-              alt={matchType}
-              width={112}
-              height={32}
-              className="h-8 w-auto"
-              unoptimized
-              priority
-            />
-          </div>
+        {/* NAKŁADKA: LOGO ROZGRYWEK na obrazie (5px, 5px) */}
+        <div
+          className="absolute z-[60]"
+          style={{ top: 5, left: 5 }}
+          aria-hidden="true"
+        >
+          <Image
+            src={competitionLogo}
+            alt={matchType}
+            width={112}
+            height={32}
+            className="h-8 w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
+            unoptimized
+            priority
+          />
+        </div>
 
+        {/* PASEK GÓRNY: tylko KOLEJKA (logo usunięte z paska) */}
+        <div className={clsx("absolute top-0 left-0 right-0 h-16 flex items-center justify-between px-8", topBarColor)}>
+          {/* lewy placeholder (szerokość = szer. logo dla zachowania centrowania) */}
+          <div className="w-[112px] h-8" />
           <div className="text-2xl font-semibold">Kolejka {round?.trim() ? round : "—"}</div>
-          <div className="opacity-0">.</div>
+          {/* prawy placeholder (symetria) */}
+          <div className="w-[112px] h-8" />
         </div>
 
         {/* TREŚĆ: HERBY + „VS” + NAZWY */}
@@ -135,7 +142,7 @@ export default function Poster({
                   text-white/85
                   text-shadow-lg
                 "
-                style={{ fontSize: 120 }}
+                style={{ fontSize: 100 }}
                 aria-hidden="true"
                 title="Pojedynek"
               >
