@@ -78,9 +78,10 @@ export default function Poster({
           <div className="opacity-0">.</div>
         </div>
 
-        {/* TREŚĆ: HERBY + NAZWY */}
+        {/* TREŚĆ: HERBY + „VS” + NAZWY */}
         <div className="absolute inset-0 pt-16 pb-28 px-8">
-          <div className="h-full grid grid-cols-2">
+          {/* 3-kolumnowa siatka: gospodarz | VS | gość */}
+          <div className="h-full grid grid-cols-[1fr_auto_1fr]">
             {/* GOSPODARZ */}
             <div className="flex flex-col items-center justify-center gap-6">
               <div className="relative w-56 h-56">
@@ -101,6 +102,27 @@ export default function Poster({
               <div className="text-center">
                 <div className="text-3xl font-bold text-shadow-lg">{host?.name ?? "—"}</div>
                 <div className="mt-1 text-white/60 text-sm uppercase tracking-wide">Gospodarz</div>
+              </div>
+            </div>
+
+            {/* VS */}
+            <div className="flex items-center justify-center px-4">
+              <div
+                className="
+                  select-none
+                  uppercase
+                  font-black
+                  leading-none
+                  tracking-[0.2em]
+                  bg-gradient-to-b from-white to-white/70
+                  text-transparent bg-clip-text
+                  text-shadow-lg
+                "
+                // duży tytuł na płótnie 1200x630
+                style={{ fontSize: 120 }}
+                aria-hidden="true"
+              >
+                VS
               </div>
             </div>
 
