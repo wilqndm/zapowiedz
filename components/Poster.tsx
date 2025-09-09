@@ -91,20 +91,21 @@ export default function Poster({
           />
         </div>
 
-       {/* PASEK GÓRNY: z clip-path i przesunięciem */}
-<div className="absolute left-0 top-[15px] h-16 px-8" style={{ width: '80%' }}>
+  {/* PASEK GÓRNY: z clip-path i przesunięciem */}
+<div className="absolute left-0 top-[15px] h-[32px] px-8" style={{ width: '90%' }}>
   <div
     className={clsx(
-      "h-full flex items-center justify-center text-white text-2xl font-semibold",
+      "h-full flex items-center justify-center text-white text-xl font-semibold",
       matchType === "Liga" ? "bg-liga" : "bg-puchar"
     )}
     style={{
-      clipPath: "polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%)"
+      clipPath: "polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%)"
     }}
   >
     Kolejka {round?.trim() ? round : "—"}
   </div>
 </div>
+
 
         {/* TREŚĆ: HERBY + „VS” + NAZWY */}
         <div className="absolute inset-0 pt-16 pb-28 px-8">
