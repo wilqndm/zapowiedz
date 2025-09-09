@@ -86,8 +86,8 @@ export default function Poster({
           <Image
             src={competitionLogo}
             alt={matchType}
-            width={224}
-            height={64}
+            width={112}
+            height={32}
             className="drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
             unoptimized
             priority
