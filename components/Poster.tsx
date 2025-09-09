@@ -14,10 +14,10 @@ type Props = {
   backgroundUrl?: string | null;
   host: Team | null;
   guest: Team | null;
-  dateISO: string | null;  // YYYY-MM-DD
-  timeHHMM: string | null; // HH:MM
-  round: string | null;    // np. "7"
-  matchType: MatchType;    // wpływa na kolor paska u góry
+  dateISO: string | null;
+  timeHHMM: string | null;
+  round: string | null;
+  matchType: MatchType;
 };
 
 export default function Poster({
@@ -30,14 +30,10 @@ export default function Poster({
   round,
   matchType
 }: Props) {
-  const topBarColor = matchType === "Liga" ? "bg-liga" : "bg-puchar";
   const address = host?.address?.trim() ? host!.address! : "—";
   const dateStr = formatFullDatePL(dateISO);
   const timeStr = safeTimeHHMM(timeHHMM);
-
   const isDataUrl = !!backgroundUrl?.startsWith("data:");
-
-  // Ścieżka do logotypu rozgrywek (pliki w /public/competitions/)
   const competitionLogo =
     matchType === "Liga"
       ? "/competitions/liga.png"
@@ -54,7 +50,6 @@ export default function Poster({
         {/* TŁO */}
         <div className="absolute inset-0">
           {isDataUrl ? (
-            // Dla data: zwykły <img> (stabilniejsze dla html-to-image)
             <img
               src={backgroundUrl || ""}
               alt="Tło"
@@ -62,7 +57,6 @@ export default function Poster({
               draggable={false}
             />
           ) : (
-            // Pozostałe: next/image z unoptimized
             <Image
               src={backgroundUrl || "/background/example.jpg"}
               alt="Tło"
@@ -73,11 +67,10 @@ export default function Poster({
               unoptimized
             />
           )}
-          {/* Przyciemnienie dla czytelności */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/80" />
         </div>
 
-        {/* NAKŁADKA: LOGO ROZGRYWEK (5px, 5px) — bez rozciągania (h=32px, w=auto) */}
+        {/* LOGO ROZGRYWEK */}
         <div
           className="absolute z-[60]"
           style={{ top: 5, left: 5 }}
@@ -91,23 +84,28 @@ export default function Poster({
           />
         </div>
 
-        {/* PASEK GÓRNY: tylko KOLEJKA (logo jest na obrazie) */}
-        <div className="absolute top-0 left-0 right-0 h-16 flex items-center justify-between px-8">   <div className="absolute inset-0 flex">     <div className="w-2/3 bg-red-600" />     <div className="w-1/3 bg-white relative">       <div className="absolute top-0 right-0 w-0 h-0 border-t-[64px] border-t-transparent border-l-[64px] border-l-white" />     </div>   </div>   <div className="relative z-10 w-full flex justify-center items-center">     <div className="text-2xl font-semibold text-black">Kolejka {round?.trim() ? round : "—"}</div>   </div> </div>
-          {/* placeholdery po bokach, by „Kolejka …” była idealnie wycentrowana */}
-          <div className="w-[112px] h-8" />
-          <div className="text-2xl font-semibold">Kolejka {round?.trim() ? round : "—"}</div>
-          <div className="w-[112px] h-8" />
+        {/* PASEK GÓRNY */}
+        <div className="absolute top-0 left-0 right-0 h-16 flex items-center justify-between px-8">
+          <div className="absolute inset-0 flex">
+            <div className="w-2/3 bg-red-600" />
+            <div className="w-1/3 bg-white relative">
+              <div className="absolute top-0 right-0 w-0 h-0 border-t-[64px] border-t-transparent border-l-[64px] border-l-white" />
+            </div>
+          </div>
+          <div className="relative z-10 w-full flex justify-center items-center">
+            <div className="text-2xl font-semibold text-black">
+              Kolejka {round?.trim() ? round : "—"}
+            </div>
+          </div>
         </div>
 
-        {/* TREŚĆ: HERBY + „VS” + NAZWY */}
+        {/* TREŚĆ */}
         <div className="absolute inset-0 pt-16 pb-28 px-8">
-          {/* 3‑kolumnowa siatka: gospodarz | VS | gość */}
           <div className="h-full grid grid-cols-[1fr_auto_1fr] mt-[30px]">
             {/* GOSPODARZ */}
             <div className="flex flex-col items-center justify-center gap-6">
               <div className="relative w-56 h-56">
                 {host?.logo ? (
-                  // Delikatna biała poświata
                   <Image
                     src={host.logo}
                     alt={host.name}
@@ -121,23 +119,19 @@ export default function Poster({
                 )}
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-shadow-lg">{host?.name ?? "—"}</div>
-                <div className="mt-1 text-white/60 text-sm uppercase tracking-wide">Gospodarz</div>
+                <div className="text-3xl font-bold text-shadow-lg">
+                  {host?.name ?? "—"}
+                </div>
+                <div className="mt-1 text-white/60 text-sm uppercase tracking-wide">
+                  Gospodarz
+                </div>
               </div>
             </div>
 
-            {/* VS – białe z lekką przezroczystością */}
+            {/* VS */}
             <div className="flex items-center justify-center px-4">
               <div
-                className="
-                  select-none
-                  uppercase
-                  font-black
-                  leading-none
-                  tracking-[0.2em]
-                  text-white/85
-                  text-shadow-lg
-                "
+                className="select-none uppercase font-black leading-none tracking-[0.2em] text-white/85 text-shadow-lg"
                 style={{ fontSize: 100 }}
                 aria-hidden="true"
                 title="Pojedynek"
@@ -163,35 +157,31 @@ export default function Poster({
                 )}
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-shadow-lg">{guest?.name ?? "—"}</div>
-                <div className="mt-1 text-white/60 text-sm uppercase tracking-wide">Gość</div>
+                <div className="text-3xl font-bold text-shadow-lg">
+                  {guest?.name ?? "—"}
+                </div>
+                <div className="mt-1 text-white/60 text-sm uppercase tracking-wide">
+                  Gość
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* DÓŁ: ADRES + DATA + GODZINA (wyśrodkowane) */}
+        {/* DÓŁ */}
         <div className="absolute bottom-0 left-0 right-0">
           <div className="px-8 py-5 bg-black/35 backdrop-blur-md">
             <div className="flex items-center justify-center gap-8 flex-wrap text-center">
-              {/* Adres stadionu gospodarza */}
               <div className="flex items-center gap-2 min-w-0">
                 <MapPinIcon className="w-6 h-6 opacity-90" />
                 <span className="text-lg truncate max-w-[40vw]">{address}</span>
               </div>
-
-              {/* separator (kropka) – ukryty na bardzo wąskich ekranach */}
               <span className="hidden sm:inline text-white/50">•</span>
-
-              {/* Data */}
               <div className="flex items-center gap-2">
                 <CalendarIcon className="w-6 h-6 opacity-90" />
                 <span className="text-lg">{dateStr}</span>
               </div>
-
               <span className="hidden sm:inline text-white/50">•</span>
-
-              {/* Godzina */}
               <div className="flex items-center gap-2">
                 <ClockIcon className="w-6 h-6 opacity-90" />
                 <span className="text-lg">{timeStr}</span>
