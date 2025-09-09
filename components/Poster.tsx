@@ -48,7 +48,7 @@ export default function Poster({
       <div
         ref={containerRef}
         id="poster"
-        className="relative w-[1200px] h-[630px] overflow-hidden rounded-xl ring-1 ring-white/10 shadow-2xl bg-black"
+        className="relative w-[1200px] h-[630px] overflow-hidden ring-1 ring-white/10 shadow-2xl bg-black"
         style={{ aspectRatio: "1200/630" }}
       >
         {/* TŁO */}
@@ -92,7 +92,7 @@ export default function Poster({
         </div>
 
         {/* PASEK GÓRNY: tylko KOLEJKA (logo jest na obrazie) */}
-        <div className={clsx("absolute top-0 left-0 right-0 h-16 flex items-center justify-between px-8", topBarColor)}>
+        <div className="absolute top-0 left-0 right-0 h-16 flex items-center justify-between px-8">   <div className="absolute inset-0 flex">     <div className="w-2/3 bg-red-600" />     <div className="w-1/3 bg-white relative">       <div className="absolute top-0 right-0 w-0 h-0 border-t-[64px] border-t-transparent border-l-[64px] border-l-white" />     </div>   </div>   <div className="relative z-10 w-full flex justify-center items-center">     <div className="text-2xl font-semibold text-black">Kolejka {round?.trim() ? round : "—"}</div>   </div> </div>
           {/* placeholdery po bokach, by „Kolejka …” była idealnie wycentrowana */}
           <div className="w-[112px] h-8" />
           <div className="text-2xl font-semibold">Kolejka {round?.trim() ? round : "—"}</div>
