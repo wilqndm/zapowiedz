@@ -54,7 +54,7 @@ export default function Poster({
         {/* TŁO */}
         <div className="absolute inset-0">
           {isDataUrl ? (
-            // Dla data: użyj zwykłego <img> (stabilniejsze dla html-to-image)
+            // Dla data: zwykły <img> (stabilniejsze dla html-to-image)
             <img
               src={backgroundUrl || ""}
               alt="Tło"
@@ -62,7 +62,7 @@ export default function Poster({
               draggable={false}
             />
           ) : (
-            // Pozostałe: next/image z unoptimized, by nie kolidować z generowaniem PNG
+            // Pozostałe: next/image z unoptimized
             <Image
               src={backgroundUrl || "/background/example.jpg"}
               alt="Tło"
@@ -77,7 +77,7 @@ export default function Poster({
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/80" />
         </div>
 
-        {/* NAKŁADKA: LOGO ROZGRYWEK (5px, 5px) — stałe 112×32 px, bez cienia */}
+        {/* NAKŁADKA: LOGO ROZGRYWEK (5px, 5px) — bez rozciągania (h=32px, w=auto) */}
         <div
           className="absolute z-[60]"
           style={{ top: 5, left: 5 }}
@@ -86,16 +86,14 @@ export default function Poster({
           <img
             src={competitionLogo}
             alt=""
-            className="block w-[112px] h-[32px]"
-            width={56}
-            height={16}
+            className="block h-[16px] w-auto"
             draggable={false}
           />
         </div>
 
-        {/* PASEK GÓRNY: tylko KOLEJKA (logo przeniesione na obraz) */}
+        {/* PASEK GÓRNY: tylko KOLEJKA (logo jest na obrazie) */}
         <div className={clsx("absolute top-0 left-0 right-0 h-16 flex items-center justify-between px-8", topBarColor)}>
-          {/* lewy/prawy placeholder – szerokość jak logo, by „Kolejka” była idealnie wycentrowana */}
+          {/* placeholdery po bokach, by „Kolejka …” była idealnie wycentrowana */}
           <div className="w-[112px] h-8" />
           <div className="text-2xl font-semibold">Kolejka {round?.trim() ? round : "—"}</div>
           <div className="w-[112px] h-8" />
@@ -109,7 +107,7 @@ export default function Poster({
             <div className="flex flex-col items-center justify-center gap-6">
               <div className="relative w-56 h-56">
                 {host?.logo ? (
-                  // Biała poświata dzięki cieniom
+                  // Delikatna biała poświata
                   <Image
                     src={host.logo}
                     alt={host.name}
@@ -140,7 +138,7 @@ export default function Poster({
                   text-white/85
                   text-shadow-lg
                 "
-                style={{ fontSize: 120 }}
+                style={{ fontSize: 100 }}
                 aria-hidden="true"
                 title="Pojedynek"
               >
