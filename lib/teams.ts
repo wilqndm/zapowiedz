@@ -9,7 +9,7 @@ export type Team = {
       { id: "nadbuzanka-slopsk", name: "Nadbużanka Słopsk", address: "" },
       { id: "impet-lajski", name: "Impet Łajski", address: "" },
       { id: "lider-zakroczym", name: "Lider Zakroczym", address: "" },
-      { id: "mewa-krubin", name: "Mewa Krubin", address: "" },
+      { id: "mewa-krubin", name: "Mewa Krubin", address: "Krubin, ul. Jeziorna 40" },
       { id: "aon-rembertow", name: "AON Rembertów", address: "" },
       { id: "wisla-jablonna", name: "Wisła Jabłonna", address: "" },
       { id: "rys-ii-laski", name: "Ryś II Laski", address: "" },
