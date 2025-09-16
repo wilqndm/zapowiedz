@@ -17,14 +17,14 @@ type Props = {
   dateISO: string | null;  // YYYY-MM-DD
   timeHHMM: string | null; // HH:MM
   round: string | null;    // np. "7"
-  matchType: MatchType;
+  matchType: MatchType;    // wpływa na kolor paska u góry
 };
 
 export default function Poster({
   containerRef,
   backgroundUrl,
   host,
-  guest,
+ guest,
   dateISO,
   timeHHMM,
   round,
@@ -36,6 +36,7 @@ export default function Poster({
 
   const isDataUrl = !!backgroundUrl?.startsWith("data:");
 
+  // Ścieżka do logotypu rozgrywek (pliki w /public/competitions/)
   const competitionLogo =
     matchType === "Liga"
       ? "/competitions/liga.png"
@@ -46,8 +47,8 @@ export default function Poster({
       <div
         ref={containerRef}
         id="poster"
-        className="relative w-[1240px] h-[1754px] ring-1 ring-white/10 shadow-2xl bg-black"
-        style={{ aspectRatio: "1240/1754" }}
+        className="relative w-[940px] h-[810px] overflow-hidden ring-1 ring-white/10 shadow-2xl bg-black"
+        style={{ aspectRatio: "940/810" }}
       >
         {/* TŁO */}
         <div className="absolute inset-0">
@@ -64,34 +65,34 @@ export default function Poster({
               alt="Tło"
               fill
               priority
-              sizes="1240px"
+              sizes="940px"
               className="object-cover"
               unoptimized
             />
           )}
         </div>
 
-        {/* LOGO ROZGRYWEK */}
+        {/* NAKŁADKA: LOGO ROZGRYWEK (15px od lewej i 15px od góry) */}
         <div
           className="absolute z-[60]"
-          style={{ top: 30, left: 30 }}
+          style={{ top: 15, left: 15 }}
           aria-hidden="true"
         >
           <img
             src={competitionLogo}
             alt=""
-            className="block h-[300px] w-auto"
+            className="block h-[200px] w-auto"
             draggable={false}
           />
         </div>
 
-        {/* PASEK GÓRNY */}
+        {/* PASEK GÓRNY: „Kolejka” przesunięty o dodatkowe 50px w dół i czcionka większa o 10px */}
         <div
           className="absolute"
           style={{
-            left: 230,
-            top: 170,
-            height: 100,
+            left: 180,
+            top: 105, 
+            height: 65,
             width: 'auto',
             zIndex: 30,
           }}
@@ -102,43 +103,43 @@ export default function Poster({
             )}
             style={{
               color: "#d60000",
-              fontSize: 100,
-              textShadow: "6px 0 0 #222",
+              fontSize: 65, 
+              textShadow: "4px 0 0 #222",
               fontWeight: 700,
-              letterSpacing: "0.03em",
+              letterSpacing: "0.02em",
             }}
           >
             {round?.trim() ? round : "—"}
           </div>
         </div>
 
-        {/* TREŚĆ: HERBY + VS + NAZWY */}
-        <div className="absolute inset-0 pt-32 pb-48 px-12">
-          <div className="h-full grid grid-cols-[1fr_auto_1fr] mt-[110px]">
+        {/* TREŚĆ: HERBY + „VS” + NAZWY (10px niżej) */}
+        <div className="absolute inset-0 pt-16 pb-28 px-8">
+          <div className="h-full grid grid-cols-[1fr_auto_1fr] mt-[40px]">
             {/* GOSPODARZ */}
-            <div className="flex flex-col items-center justify-center gap-12">
-              <div className="relative w-[340px] h-[340px]">
+            <div className="flex flex-col items-center justify-center gap-6">
+              <div className="relative w-56 h-56">
                 {host?.logo ? (
                   <Image
                     src={host.logo}
                     alt={host.name}
                     fill
-                    sizes="340px"
-                    className="object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.95)] [filter:drop-shadow(0_0_24px_rgba(255,255,255,0.7))]"
+                    sizes="224px"
+                    className="object-contain drop-shadow-[0_0_6px_rgba(255,255,255,0.95)] [filter:drop-shadow(0_0_12px_rgba(255,255,255,0.7))]"
                     unoptimized
                   />
                 ) : (
                   <div className="w-full h-full rounded-full bg-white/10 ring-1 ring-white/20" />
                 )}
               </div>
-              <div className="text-center mt-4">
-                <div className="text-5xl font-bold text-shadow-lg">{host?.name?.toUpperCase() ?? "—"}</div>
-                <div className="mt-2 text-white/60 text-2xl uppercase tracking-wide">Gospodarz</div>
+              <div className="text-center mt-2">
+                <div className="text-3xl font-bold text-shadow-lg">{host?.name?.toUpperCase() ?? "—"}</div>
+                <div className="mt-1 text-white/60 text-sm uppercase tracking-wide">Gospodarz</div>
               </div>
             </div>
 
-            {/* VS */}
-            <div className="flex items-center justify-center px-6 mt-4">
+            {/* VS – mniejszy, litery blisko siebie */}
+            <div className="flex items-center justify-center px-4 mt-2">
               <div
                 className="
                   select-none
@@ -149,7 +150,7 @@ export default function Poster({
                   text-shadow-lg
                   tracking-[-0.05em]
                 "
-                style={{ fontSize: 110, letterSpacing: "-0.07em" }}
+                style={{ fontSize: 60, letterSpacing: "-0.07em" }}
                 aria-hidden="true"
                 title="Pojedynek"
               >
@@ -158,47 +159,49 @@ export default function Poster({
             </div>
 
             {/* GOŚĆ */}
-            <div className="flex flex-col items-center justify-center gap-12">
-              <div className="relative w-[340px] h-[340px]">
+            <div className="flex flex-col items-center justify-center gap-6">
+              <div className="relative w-56 h-56">
                 {guest?.logo ? (
                   <Image
                     src={guest.logo}
                     alt={guest.name}
                     fill
-                    sizes="340px"
-                    className="object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.95)] [filter:drop-shadow(0_0_24px_rgba(255,255,255,0.7))]"
+                    sizes="224px"
+                    className="object-contain drop-shadow-[0_0_6px_rgba(255,255,255,0.95)] [filter:drop-shadow(0_0_12px_rgba(255,255,255,0.7))]"
                     unoptimized
                   />
                 ) : (
                   <div className="w-full h-full rounded-full bg-white/10 ring-1 ring-white/20" />
                 )}
               </div>
-              <div className="text-center mt-4">
-                <div className="text-5xl font-bold text-shadow-lg">{guest?.name?.toUpperCase() ?? "—"}</div>
-                <div className="mt-2 text-white/60 text-2xl uppercase tracking-wide">Gość</div>
+              <div className="text-center mt-2">
+                <div className="text-3xl font-bold text-shadow-lg">{guest?.name?.toUpperCase() ?? "—"}</div>
+                <div className="mt-1 text-white/60 text-sm uppercase tracking-wide">Gość</div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* DÓŁ: ADRES + DATA + GODZINA */}
+       {/* DÓŁ: ADRES + DATA + GODZINA (gap, bez kropek, bez pogrubienia) */}
         <div className="absolute bottom-0 left-0 right-0">
-          <div className="px-12 py-16 bg-black/50 backdrop-blur-md">
-            <div className="flex items-center justify-center gap-16 flex-wrap text-center">
+          <div className="px-8 py-10 bg-black/50 backdrop-blur-md">
+            <div className="flex items-center justify-center gap-8 flex-wrap text-center">
               {/* Adres stadionu gospodarza */}
-              <div className="flex items-center gap-4 min-w-0">
-                <MapPinIcon className="w-12 h-12 opacity-95" />
-                <span className="text-4xl font-normal text-white drop-shadow-md truncate max-w-[50vw]">{address}</span>
+              <div className="flex items-center gap-2 min-w-0">
+                <MapPinIcon className="w-8 h-8 opacity-95" />
+                <span className="text-2xl font-normal text-white drop-shadow-md truncate max-w-[40vw]">{address}</span>
               </div>
+
               {/* Data */}
-              <div className="flex items-center gap-4">
-                <CalendarIcon className="w-12 h-12 opacity-95" />
-                <span className="text-4xl font-normal text-white drop-shadow-md">{dateStr}</span>
+              <div className="flex items-center gap-2">
+                <CalendarIcon className="w-8 h-8 opacity-95" />
+                <span className="text-2xl font-normal text-white drop-shadow-md">{dateStr}</span>
               </div>
+
               {/* Godzina */}
-              <div className="flex items-center gap-4">
-                <ClockIcon className="w-12 h-12 opacity-95" />
-                <span className="text-4xl font-normal text-white drop-shadow-md">{timeStr}</span>
+              <div className="flex items-center gap-2">
+                <ClockIcon className="w-8 h-8 opacity-95" />
+                <span className="text-2xl font-normal text-white drop-shadow-md">{timeStr}</span>
               </div>
             </div>
           </div>
