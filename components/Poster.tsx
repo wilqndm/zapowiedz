@@ -92,7 +92,7 @@ export default function Poster({
           style={{
             left: 180,
             top: 110, 
-            height: 70,
+            height: 65,
             width: 'auto',
             zIndex: 30,
           }}
@@ -103,7 +103,7 @@ export default function Poster({
             )}
             style={{
               color: "#d60000",
-              fontSize: 70, // było 40, +10px
+              fontSize: 65, 
               textShadow: "4px 0 0 #222",
               fontWeight: 700,
               letterSpacing: "0.02em",
