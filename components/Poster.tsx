@@ -91,7 +91,7 @@ export default function Poster({
           className="absolute"
           style={{
             left: 180,
-            top: 110, 
+            top: 105, 
             height: 65,
             width: 'auto',
             zIndex: 30,
