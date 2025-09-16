@@ -30,7 +30,6 @@ export default function Poster({
   round,
   matchType
 }: Props) {
-  const topBarColor = matchType === "Liga" ? "bg-liga" : "bg-puchar";
   const address = host?.address?.trim() ? host!.address! : "—";
   const dateStr = formatFullDatePL(dateISO);
   const timeStr = safeTimeHHMM(timeHHMM);
@@ -73,8 +72,8 @@ export default function Poster({
               unoptimized
             />
           )}
-          {/* Przyciemnienie dla czytelności */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/80" />
+          {/* Usunięte przyciemnienie dla czytelności */}
+          {/* <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/80" /> */}
         </div>
 
         {/* NAKŁADKA: LOGO ROZGRYWEK (5px, 5px) — bez rozciągania (h=32px, w=auto) */}
@@ -91,22 +90,19 @@ export default function Poster({
           />
         </div>
 
-{/* PASEK GÓRNY: nieregularny kształt z clip-path */}
-<div className="absolute left-0 top-[15px] h-[48px]" style={{ width: '90%' }}>
-  <div
-    className={clsx(
-      "h-full flex items-center justify-center text-white text-xl font-semibold",
-      matchType === "Liga" ? "bg-liga" : "bg-puchar"
-    )}
-    style={{
-      clipPath: "polygon(0% 9%, 100% 10%, 37% 70%, 11% 69%, 61% 25%, 0% 25%, 2% 29%, 100% 28%, 74% 56%, 1% 58%)"
-    }}
-  >
-    Kolejka {round?.trim() ? round : "—"}
-  </div>
-</div>
-
-
+        {/* PASEK GÓRNY: tylko tekst, bez koloru tła */}
+        <div className="absolute left-0 top-[15px] h-[48px]" style={{ width: '90%' }}>
+          <div
+            className={clsx(
+              "h-full flex items-center justify-center text-white text-xl font-semibold"
+            )}
+            style={{
+              // Usunięty kolor tła i clipPath
+            }}
+          >
+            Kolejka {round?.trim() ? round : "—"}
+          </div>
+        </div>
 
         {/* TREŚĆ: HERBY + „VS” + NAZWY */}
         <div className="absolute inset-0 pt-16 pb-28 px-8">
