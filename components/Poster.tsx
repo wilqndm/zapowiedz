@@ -53,7 +53,6 @@ export default function Poster({
         {/* TŁO */}
         <div className="absolute inset-0">
           {isDataUrl ? (
-            // Dla data: zwykły <img> (stabilniejsze dla html-to-image)
             <img
               src={backgroundUrl || ""}
               alt="Tło"
@@ -61,7 +60,6 @@ export default function Poster({
               draggable={false}
             />
           ) : (
-            // Pozostałe: next/image z unoptimized
             <Image
               src={backgroundUrl || "/background/example.jpg"}
               alt="Tło"
@@ -88,11 +86,11 @@ export default function Poster({
           />
         </div>
 
-        {/* PASEK GÓRNY: „Kolejka” przesunięty, czerwony */}
+        {/* PASEK GÓRNY: „Kolejka” przesunięty, większy, twardy cień */}
         <div
           className="absolute"
           style={{
-            left: 100,
+            left: 150,
             top: 50,
             height: 48,
             width: 'auto',
@@ -101,12 +99,14 @@ export default function Poster({
         >
           <div
             className={clsx(
-              "h-full flex items-center justify-center font-semibold"
+              "h-full flex items-center justify-center font-sans"
             )}
             style={{
-              color: "#d60000", // mocno czerwony
-              fontSize: 32,
-              textShadow: "0 2px 10px rgba(0,0,0,0.45)",
+              color: "#d60000",
+              fontSize: 40,
+              textShadow: "4px 0 0 #222",
+              fontWeight: 700,
+              letterSpacing: "0.02em",
             }}
           >
             Kolejka {round?.trim() ? round : "—"}
@@ -115,13 +115,11 @@ export default function Poster({
 
         {/* TREŚĆ: HERBY + „VS” + NAZWY */}
         <div className="absolute inset-0 pt-16 pb-28 px-8">
-          {/* 3‑kolumnowa siatka: gospodarz | VS | gość */}
           <div className="h-full grid grid-cols-[1fr_auto_1fr] mt-[30px]">
             {/* GOSPODARZ */}
             <div className="flex flex-col items-center justify-center gap-6">
               <div className="relative w-56 h-56">
                 {host?.logo ? (
-                  // Delikatna biała poświata
                   <Image
                     src={host.logo}
                     alt={host.name}
@@ -140,7 +138,7 @@ export default function Poster({
               </div>
             </div>
 
-            {/* VS – białe z lekką przezroczystością */}
+            {/* VS */}
             <div className="flex items-center justify-center px-4">
               <div
                 className="
@@ -184,31 +182,30 @@ export default function Poster({
           </div>
         </div>
 
-        {/* DÓŁ: ADRES + DATA + GODZINA (wyśrodkowane, 2x wyższy pasek, większe napisy, lepsza widoczność) */}
+        {/* DÓŁ: ADRES + DATA + GODZINA (zmniejsz gap, bez pogrubienia) */}
         <div className="absolute bottom-0 left-0 right-0">
           <div className="px-8 py-10 bg-black/50 backdrop-blur-md">
-            <div className="flex items-center justify-center gap-12 flex-wrap text-center">
+            <div className="flex items-center justify-center gap-8 flex-wrap text-center">
               {/* Adres stadionu gospodarza */}
-              <div className="flex items-center gap-4 min-w-0">
+              <div className="flex items-center gap-2 min-w-0">
                 <MapPinIcon className="w-8 h-8 opacity-95" />
-                <span className="text-2xl font-bold text-white drop-shadow-md truncate max-w-[40vw]">{address}</span>
+                <span className="text-2xl font-normal text-white drop-shadow-md truncate max-w-[40vw]">{address}</span>
               </div>
 
-              {/* separator (kropka) – ukryty na bardzo wąskich ekranach */}
-              <span className="hidden sm:inline text-white/70 text-2xl font-bold">•</span>
+              <span className="hidden sm:inline text-white/70 text-2xl font-normal">•</span>
 
               {/* Data */}
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
                 <CalendarIcon className="w-8 h-8 opacity-95" />
-                <span className="text-2xl font-bold text-white drop-shadow-md">{dateStr}</span>
+                <span className="text-2xl font-normal text-white drop-shadow-md">{dateStr}</span>
               </div>
 
-              <span className="hidden sm:inline text-white/70 text-2xl font-bold">•</span>
+              <span className="hidden sm:inline text-white/70 text-2xl font-normal">•</span>
 
               {/* Godzina */}
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
                 <ClockIcon className="w-8 h-8 opacity-95" />
-                <span className="text-2xl font-bold text-white drop-shadow-md">{timeStr}</span>
+                <span className="text-2xl font-normal text-white drop-shadow-md">{timeStr}</span>
               </div>
             </div>
           </div>
