@@ -72,21 +72,21 @@ export default function Poster({
           )}
         </div>
 
-        {/* NAKŁADKA: LOGO ROZGRYWEK (15px od lewej, większe) */}
+        {/* NAKŁADKA: LOGO ROZGRYWEK (jeszcze większe, 50px niżej, 100px w prawo) */}
         <div
           className="absolute z-[60]"
-          style={{ top: 5, left: 15 }}
+          style={{ top: 55, left: 115 }}
           aria-hidden="true"
         >
           <img
             src={competitionLogo}
             alt=""
-            className="block h-[160px] w-auto"
+            className="block h-[200px] w-auto"
             draggable={false}
           />
         </div>
 
-        {/* PASEK GÓRNY: „Kolejka” przesunięty, większy, twardy cień */}
+        {/* PASEK GÓRNY: „Kolejka” przesunięty, większy, twardy cień, uppercase */}
         <div
           className="absolute"
           style={{
@@ -99,7 +99,7 @@ export default function Poster({
         >
           <div
             className={clsx(
-              "h-full flex items-center justify-center font-sans"
+              "h-full flex items-center justify-center font-sans uppercase"
             )}
             style={{
               color: "#d60000",
@@ -109,13 +109,13 @@ export default function Poster({
               letterSpacing: "0.02em",
             }}
           >
-            Kolejka {round?.trim() ? round : "—"}
+            KOLEJKA {round?.trim() ? round : "—"}
           </div>
         </div>
 
-        {/* TREŚĆ: HERBY + „VS” + NAZWY */}
+        {/* TREŚĆ: HERBY + „VS” + NAZWY (10px niżej) */}
         <div className="absolute inset-0 pt-16 pb-28 px-8">
-          <div className="h-full grid grid-cols-[1fr_auto_1fr] mt-[30px]">
+          <div className="h-full grid grid-cols-[1fr_auto_1fr] mt-[40px]">
             {/* GOSPODARZ */}
             <div className="flex flex-col items-center justify-center gap-6">
               <div className="relative w-56 h-56">
@@ -132,25 +132,25 @@ export default function Poster({
                   <div className="w-full h-full rounded-full bg-white/10 ring-1 ring-white/20" />
                 )}
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-shadow-lg">{host?.name ?? "—"}</div>
+              <div className="text-center mt-2">
+                <div className="text-3xl font-bold text-shadow-lg">{host?.name?.toUpperCase() ?? "—"}</div>
                 <div className="mt-1 text-white/60 text-sm uppercase tracking-wide">Gospodarz</div>
               </div>
             </div>
 
-            {/* VS */}
-            <div className="flex items-center justify-center px-4">
+            {/* VS – mniejszy, litery blisko siebie */}
+            <div className="flex items-center justify-center px-4 mt-2">
               <div
                 className="
                   select-none
                   uppercase
                   font-black
                   leading-none
-                  tracking-[0.2em]
                   text-white/85
                   text-shadow-lg
+                  tracking-[-0.05em]
                 "
-                style={{ fontSize: 100 }}
+                style={{ fontSize: 60, letterSpacing: "-0.07em" }}
                 aria-hidden="true"
                 title="Pojedynek"
               >
@@ -174,8 +174,8 @@ export default function Poster({
                   <div className="w-full h-full rounded-full bg-white/10 ring-1 ring-white/20" />
                 )}
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-shadow-lg">{guest?.name ?? "—"}</div>
+              <div className="text-center mt-2">
+                <div className="text-3xl font-bold text-shadow-lg">{guest?.name?.toUpperCase() ?? "—"}</div>
                 <div className="mt-1 text-white/60 text-sm uppercase tracking-wide">Gość</div>
               </div>
             </div>
