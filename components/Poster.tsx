@@ -91,8 +91,8 @@ export default function Poster({
           className="absolute"
           style={{
             left: 200,
-            top: 125, // było 75, +50px
-            height: 48,
+            top: 120, 
+            height: 58,
             width: 'auto',
             zIndex: 30,
           }}
@@ -182,7 +182,7 @@ export default function Poster({
           </div>
         </div>
 
-        {/* DÓŁ: ADRES + DATA + GODZINA (zmniejsz gap, bez pogrubienia) */}
+       {/* DÓŁ: ADRES + DATA + GODZINA (gap, bez kropek, bez pogrubienia) */}
         <div className="absolute bottom-0 left-0 right-0">
           <div className="px-8 py-10 bg-black/50 backdrop-blur-md">
             <div className="flex items-center justify-center gap-8 flex-wrap text-center">
@@ -192,15 +192,11 @@ export default function Poster({
                 <span className="text-2xl font-normal text-white drop-shadow-md truncate max-w-[40vw]">{address}</span>
               </div>
 
-              <span className="hidden sm:inline text-white/70 text-2xl font-normal">•</span>
-
               {/* Data */}
               <div className="flex items-center gap-2">
                 <CalendarIcon className="w-8 h-8 opacity-95" />
                 <span className="text-2xl font-normal text-white drop-shadow-md">{dateStr}</span>
               </div>
-
-              <span className="hidden sm:inline text-white/70 text-2xl font-normal">•</span>
 
               {/* Godzina */}
               <div className="flex items-center gap-2">
