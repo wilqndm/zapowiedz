@@ -104,7 +104,7 @@
             <span className="text-sm text-white/70"></span>
             <input
               type="text"
-              placeholder="np. 7"
+              placeholder="np Kolejka 12"
               value={round ?? ""}
               onChange={(e) => setRound(e.target.value)}
               className="bg-neutral-900 border border-white/10 rounded-lg px-3 py-2"
