@@ -126,7 +126,7 @@
 
           {/* Tło */}
           <div className="grid gap-2">
-            <div className="text-sm text-white/70">Tło plakatu (1200×630)</div>
+            <div className="text-sm text-white/70">Tło plakatu </div>
             <div className="flex gap-2">
               <input
                 id={bgInputId}
@@ -158,7 +158,7 @@
             onClick={onDownload}
             className="mt-2 py-2.5 rounded-lg bg-white text-neutral-900 font-semibold hover:bg-white/90"
           >
-            Pobierz PNG (1200×630)
+            Pobierz plakat
           </button>
 
           <div className="text-xs text-white/50 leading-relaxed">
