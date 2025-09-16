@@ -90,9 +90,9 @@ export default function Poster({
         <div
           className="absolute"
           style={{
-            left: 200,
+            left: 180,
             top: 110, 
-            height: 58,
+            height: 70,
             width: 'auto',
             zIndex: 30,
           }}
@@ -103,7 +103,7 @@ export default function Poster({
             )}
             style={{
               color: "#d60000",
-              fontSize: 50, // było 40, +10px
+              fontSize: 70, // było 40, +10px
               textShadow: "4px 0 0 #222",
               fontWeight: 700,
               letterSpacing: "0.02em",
