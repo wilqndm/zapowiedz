@@ -72,7 +72,7 @@ export default function Poster({
           )}
         </div>
 
-        {/* NAKŁADKA: LOGO ROZGRYWEK (jeszcze większe, 50px niżej, 100px w prawo) */}
+        {/* NAKŁADKA: LOGO ROZGRYWEK (duże, 55px niżej, 115px w prawo) */}
         <div
           className="absolute z-[60]"
           style={{ top: 55, left: 115 }}
@@ -86,12 +86,12 @@ export default function Poster({
           />
         </div>
 
-        {/* PASEK GÓRNY: „Kolejka” przesunięty, większy, twardy cień, uppercase */}
+        {/* PASEK GÓRNY: „Kolejka” przesunięty 200px w prawo i 75px w dół, większy, twardy cień, uppercase */}
         <div
           className="absolute"
           style={{
-            left: 150,
-            top: 50,
+            left: 200,
+            top: 75,
             height: 48,
             width: 'auto',
             zIndex: 30,
