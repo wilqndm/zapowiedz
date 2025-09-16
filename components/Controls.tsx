@@ -101,7 +101,7 @@
 
           {/* Kolejka */}
           <label className="grid gap-1">
-            <span className="text-sm text-white/70">Kolejka</span>
+            <span className="text-sm text-white/70"></span>
             <input
               type="text"
               placeholder="np. 7"
