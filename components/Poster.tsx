@@ -109,7 +109,7 @@ export default function Poster({
               letterSpacing: "0.02em",
             }}
           >
-            KOLEJKA {round?.trim() ? round : "—"}
+            {round?.trim() ? round : "—"}
           </div>
         </div>
 
