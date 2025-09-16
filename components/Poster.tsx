@@ -14,17 +14,17 @@ type Props = {
   backgroundUrl?: string | null;
   host: Team | null;
   guest: Team | null;
-  dateISO: string | null;  // YYYY-MM-DD
-  timeHHMM: string | null; // HH:MM
-  round: string | null;    // np. "7"
-  matchType: MatchType;    // wpływa na kolor paska u góry
+  dateISO: string | null;
+  timeHHMM: string | null;
+  round: string | null;
+  matchType: MatchType;
 };
 
 export default function Poster({
   containerRef,
   backgroundUrl,
   host,
- guest,
+  guest,
   dateISO,
   timeHHMM,
   round,
@@ -36,7 +36,6 @@ export default function Poster({
 
   const isDataUrl = !!backgroundUrl?.startsWith("data:");
 
-  // Ścieżka do logotypu rozgrywek (pliki w /public/competitions/)
   const competitionLogo =
     matchType === "Liga"
       ? "/competitions/liga.png"
@@ -47,7 +46,7 @@ export default function Poster({
       <div
         ref={containerRef}
         id="poster"
-        className="relative w-[940px] h-[810px] overflow-hidden ring-1 ring-white/10 shadow-2xl bg-black"
+        className="relative w-[940px] h-[810px] ring-1 ring-white/10 shadow-2xl bg-black"
         style={{ aspectRatio: "940/810" }}
       >
         {/* TŁO */}
@@ -72,7 +71,7 @@ export default function Poster({
           )}
         </div>
 
-        {/* NAKŁADKA: LOGO ROZGRYWEK (15px od lewej i 15px od góry) */}
+        {/* LOGO ROZGRYWEK */}
         <div
           className="absolute z-[60]"
           style={{ top: 15, left: 15 }}
@@ -86,12 +85,12 @@ export default function Poster({
           />
         </div>
 
-        {/* PASEK GÓRNY: „Kolejka” przesunięty o dodatkowe 50px w dół i czcionka większa o 10px */}
+        {/* PASEK GÓRNY */}
         <div
           className="absolute"
           style={{
             left: 180,
-            top: 105, 
+            top: 105,
             height: 65,
             width: 'auto',
             zIndex: 30,
@@ -103,7 +102,7 @@ export default function Poster({
             )}
             style={{
               color: "#d60000",
-              fontSize: 65, 
+              fontSize: 65,
               textShadow: "4px 0 0 #222",
               fontWeight: 700,
               letterSpacing: "0.02em",
@@ -113,8 +112,8 @@ export default function Poster({
           </div>
         </div>
 
-        {/* TREŚĆ: HERBY + „VS” + NAZWY (10px niżej) */}
-        <div className="absolute inset-0 pt-16 pb-28 px-8">
+        {/* TREŚĆ: HERBY + VS + NAZWY */}
+        <div className="absolute inset-0 pt-16 pb-40 px-8"> {/* <-- Zwiększony pb */}
           <div className="h-full grid grid-cols-[1fr_auto_1fr] mt-[40px]">
             {/* GOSPODARZ */}
             <div className="flex flex-col items-center justify-center gap-6">
@@ -138,7 +137,7 @@ export default function Poster({
               </div>
             </div>
 
-            {/* VS – mniejszy, litery blisko siebie */}
+            {/* VS */}
             <div className="flex items-center justify-center px-4 mt-2">
               <div
                 className="
@@ -182,8 +181,8 @@ export default function Poster({
           </div>
         </div>
 
-       {/* DÓŁ: ADRES + DATA + GODZINA (gap, bez kropek, bez pogrubienia) */}
-        <div className="absolute bottom-0 left-0 right-0">
+        {/* DÓŁ: ADRES + DATA + GODZINA */}
+        <div className="absolute left-0 right-0" style={{bottom: 0}}>
           <div className="px-8 py-10 bg-black/50 backdrop-blur-md">
             <div className="flex items-center justify-center gap-8 flex-wrap text-center">
               {/* Adres stadionu gospodarza */}
@@ -191,13 +190,11 @@ export default function Poster({
                 <MapPinIcon className="w-8 h-8 opacity-95" />
                 <span className="text-2xl font-normal text-white drop-shadow-md truncate max-w-[40vw]">{address}</span>
               </div>
-
               {/* Data */}
               <div className="flex items-center gap-2">
                 <CalendarIcon className="w-8 h-8 opacity-95" />
                 <span className="text-2xl font-normal text-white drop-shadow-md">{dateStr}</span>
               </div>
-
               {/* Godzina */}
               <div className="flex items-center gap-2">
                 <ClockIcon className="w-8 h-8 opacity-95" />
