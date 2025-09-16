@@ -24,7 +24,7 @@ export default function Poster({
   containerRef,
   backgroundUrl,
   host,
-  guest,
+ guest,
   dateISO,
   timeHHMM,
   round,
@@ -72,10 +72,10 @@ export default function Poster({
           )}
         </div>
 
-        {/* NAKŁADKA: LOGO ROZGRYWEK (duże, 55px niżej, 115px w prawo) */}
+        {/* NAKŁADKA: LOGO ROZGRYWEK (15px od lewej i 15px od góry) */}
         <div
           className="absolute z-[60]"
-          style={{ top: 55, left: 115 }}
+          style={{ top: 15, left: 15 }}
           aria-hidden="true"
         >
           <img
@@ -86,12 +86,12 @@ export default function Poster({
           />
         </div>
 
-        {/* PASEK GÓRNY: „Kolejka” przesunięty 200px w prawo i 75px w dół, większy, twardy cień, uppercase */}
+        {/* PASEK GÓRNY: „Kolejka” przesunięty o dodatkowe 50px w dół i czcionka większa o 10px */}
         <div
           className="absolute"
           style={{
             left: 200,
-            top: 75,
+            top: 125, // było 75, +50px
             height: 48,
             width: 'auto',
             zIndex: 30,
@@ -103,7 +103,7 @@ export default function Poster({
             )}
             style={{
               color: "#d60000",
-              fontSize: 40,
+              fontSize: 50, // było 40, +10px
               textShadow: "4px 0 0 #222",
               fontWeight: 700,
               letterSpacing: "0.02em",
